@@ -15,6 +15,7 @@ namespace Timetable.Service.Services
         private readonly IConsultRepository consultRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
+        private readonly DateTime nullDateTime = DateTime.MinValue;
 
         public ConsultsService(IConsultRepository consultRepo, IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -98,6 +99,21 @@ namespace Timetable.Service.Services
             var consults = consultRepository.GetAll();
 
             return mapper.Map<IEnumerable<Consult>, IEnumerable<ConsultDTO>>(consults);
+        }
+
+        public IEnumerable<ConsultDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
+            string classroomTitle, string academicGroupName)
+        {
+            var consults = consultRepository.GetMany(
+                c =>  date == null || c.Date.Equals(date) &&
+                      facultyTitle == null || c.Faculty.FacultyName.ToLower() == facultyTitle.ToLower() &&
+                      subjectName == null || c.Subject.SubjectTitle.ToLower() == subjectName.ToLower() &&
+                      classroomTitle == null || c.Classroom.ClassroomTitle.ToLower() == classroomTitle.ToLower() &&
+                      academicGroupName == null || c.AcademicGroup.GroupName.ToLower() == academicGroupName.ToLower());
+
+
+            return mapper.Map<IEnumerable<Consult>, IEnumerable<ConsultDTO>>(consults);
+
         }
 
         public void Create(ConsultDTO consult)

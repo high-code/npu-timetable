@@ -10,7 +10,7 @@ namespace Timetable.Service.DTO
     {
         public int SubjectTypeId { get; set; }
 
-        public string SubjetTypeName { get; set; }
+        public string SubjectTypeTitle { get; set; }
 
     }
 }

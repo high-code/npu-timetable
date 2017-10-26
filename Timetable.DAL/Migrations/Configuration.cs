@@ -40,6 +40,8 @@ namespace Timetable.DAL.Migrations
             context.Classrooms.AddOrUpdate(x => x.ClassroomId,
                 new Classroom() { ClassroomId = 1, BuildingId = 1, ClassroomTitle = "229a" });
 
+
+
             context.Chairs.AddOrUpdate(x => x.ChairId,
                 new Chair() { ChairId = 1, ChairTitle = "Кафедра програмної інженерії", FacultyId = 1 });
 
@@ -80,6 +82,29 @@ namespace Timetable.DAL.Migrations
                     Weekday = 4,
                     TeacherNotification = ""
                 });
+
+            context.Consults.AddOrUpdate(x => x.Id,
+                new Consult()
+                {
+                    Id = 1,
+                    AcademicGroupId = 1,
+                    ClassroomId = 1,
+                    Date = new DateTime(2018, 1, 15),
+                    FacultyId = 1,
+                    SubjectId = 1                
+                });
+
+            context.Exams.AddOrUpdate(x => x.Id,
+                new Exam()
+                {
+                    Id = 1,
+                    AcademicGroupId = 1,
+                    ClassroomId = 1,
+                    Date = new DateTime(2018, 1, 16),
+                    FacultyId = 1,
+                    SubjectId = 1
+                });
+
         }
     }
 }

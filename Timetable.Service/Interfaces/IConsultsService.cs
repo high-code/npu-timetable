@@ -20,6 +20,9 @@ namespace Timetable.Service.Interfaces
         IEnumerable<ConsultDTO> GetByAcademicGroupName(string academicGroup);
         IEnumerable<ConsultDTO> GetByAcademicGroupId(int academicGroupId);
         IEnumerable<ConsultDTO> GetByDate(DateTime date);
+
+        IEnumerable<ConsultDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
+            string classroomTitle, string academicGroupName);
         
     }
 }

@@ -34,13 +34,13 @@ namespace Timetable.Service.DTO
 
         public string  ClassroomTitle { get; set; }
 
-        public int BuidlingId { get; set; }
+        public int BuildingId { get; set; }
 
         public string BuildingTitle { get; set; }
 
         public bool IsEnumerator { get; set; }
 
-        public int ExpectedAmountOfStudent { get; set; }
+        public int ExpectedAmountOfStudents { get; set; }
 
         public string TeacherNotification { get; set; }
     }
