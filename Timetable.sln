@@ -3,7 +3,31 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetable.DAL", "Timetable.DAL\Timetable.DAL.csproj", "{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetable.Service", "Timetable.Service\Timetable.Service.csproj", "{1ED4AF10-B0F2-4350-B264-64B44165905F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timetable.WebApi", "Timetable.WebApi\Timetable.WebApi.csproj", "{183BA495-6CF8-411A-9080-79323AB3760F}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ED4AF10-B0F2-4350-B264-64B44165905F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ED4AF10-B0F2-4350-B264-64B44165905F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ED4AF10-B0F2-4350-B264-64B44165905F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ED4AF10-B0F2-4350-B264-64B44165905F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{183BA495-6CF8-411A-9080-79323AB3760F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{183BA495-6CF8-411A-9080-79323AB3760F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{183BA495-6CF8-411A-9080-79323AB3760F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{183BA495-6CF8-411A-9080-79323AB3760F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
