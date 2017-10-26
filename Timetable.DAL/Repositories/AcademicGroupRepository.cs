@@ -5,6 +5,8 @@ using System.Data.Entity;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Repositories.Interfaces;
+using System.Linq.Expressions;
+
 namespace Timetable.DAL.Repositories
 {
     public class AcademicGroupRepository : RepositoryBase<AcademicGroup>, IAcademicGroupRepository
@@ -13,6 +15,21 @@ namespace Timetable.DAL.Repositories
             : base(dbFactory) { }
 
 
+        public override AcademicGroup GetById(int id)
+        {
+            return DbContext.AcademicGroups
+                .Include(ag => ag.Faculty)
+                .Include(ag => ag.Specialty)
+                .FirstOrDefault(ag => ag.AcademicGroupId == id);
+        }
+
+        public override IEnumerable<AcademicGroup> GetMany(Expression<Func<AcademicGroup, bool>> where)
+        {
+            return DbContext.AcademicGroups
+                .Include(ag => ag.Faculty)
+                .Include(ag => ag.Specialty)
+                .Where(where);
+        }
 
         // Get methods (By name,faculty,specialty)       
         public AcademicGroup GetAcademicGroupByName(string name)

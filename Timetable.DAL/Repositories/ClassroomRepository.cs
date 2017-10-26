@@ -21,6 +21,7 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(c => c.ClassroomId == id);
         }
 
+
         public override IEnumerable<Classroom> GetAll()
         {
             return DbContext.Classrooms

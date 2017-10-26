@@ -21,11 +21,13 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(c => c.ChairId == id);
         }
 
+        
+
         public override IEnumerable<Chair> GetAll()
         {
+            
             return DbContext.Chairs
-                .Include(c => c.Faculty)
-                .ToList();
+                .Include(c => c.Faculty);
         }
 
         public Chair GetChairByTitle(string title)

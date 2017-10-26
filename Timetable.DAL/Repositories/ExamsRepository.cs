@@ -1,15 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
+using System.Linq.Expressions;
+
 namespace Timetable.DAL.Repositories
 {
     public class ExamsRepository : RepositoryBase<Exam>, IExamRepository
     {
         public ExamsRepository(IDbFactory dbFactory) : base(dbFactory)
         { }
+
+
+        public override Exam GetById(int id)
+        {
+            return DbContext.Exams
+                .Include(e => e.AcademicGroup)
+                .Include(e => e.Classroom)
+                .Include(e => e.Faculty)
+                .Include(e => e.Subject)
+                .FirstOrDefault(e => e.Id == id);
+        }
+
+
+        public override IEnumerable<Exam> GetMany(Expression<Func<Exam, bool>> where)
+        {
+            return DbContext.Exams
+                .Include(e => e.AcademicGroup)
+                .Include(e => e.Classroom)
+                .Include(e => e.Faculty)
+                .Include(e => e.Subject)
+                .Where(where);
+        }
 
         public IEnumerable<Exam> GetExamsBySubject(string subject)
         {
