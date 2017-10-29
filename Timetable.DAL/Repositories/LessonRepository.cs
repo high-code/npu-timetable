@@ -15,9 +15,13 @@ namespace Timetable.DAL.Repositories
             : base(dbFactory)
         { }
 
+        
+        
+
 
         public override Lesson GetById(int id)
         {
+            
             return DbContext.Lessons
                 .Include(l => l.AcademicGroup)
                 .Include(l => l.Classroom)
@@ -26,15 +30,21 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(l => l.Id == id);
         }
 
-        public override IEnumerable<Lesson> GetMany(Expression<Func<Lesson, bool>> where)
+        public  IEnumerable<Lesson> GetMany(Expression<Func<Lesson, bool>> where, int page, int pageSize)
         {
             return DbContext.Lessons
                 .Include(l => l.AcademicGroup)
+                .Include(l => l.Classroom.Building)
+                .Include(l => l.Subject.SubjectType)
                 .Include(l => l.Classroom)
                 .Include(l => l.Faculty)
                 .Include(l => l.Subject)
-                .Where(where);
+                .Where(where)
+                .OrderBy(l => l.Id)
+                .Skip(pageSize * (page - 1))
+                .Take(pageSize);
         }
+
 
         public IEnumerable<Lesson> GetLessonsForFaculty(string faculty)
         {

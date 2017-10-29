@@ -26,7 +26,14 @@ namespace Timetable.Service.Services
        }
 
 
-       public IEnumerable<BuildingDTO> GetAll()
+
+        public int Count
+        {
+            get { return buildingRepository.Count; }
+        }
+
+
+        public IEnumerable<BuildingDTO> GetAll()
        {
            var buildings = buildingRepository.GetAll();
 

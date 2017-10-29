@@ -12,6 +12,11 @@ namespace Timetable.Service.Infrastructure
 
         T Get(int id);
 
+        int Count
+        {
+            get;
+        }
+
         void Create(T entity);
 
         void Update(T entity);

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Timetable.DAL.Infrastructure;
 using Timetable.Service.Interfaces;
 using Timetable.DAL.Repositories;
@@ -22,6 +23,11 @@ namespace Timetable.Service.Services
             this.examRepository = examRepo;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+        }
+        
+        public int Count
+        {
+            get { return Count; }
         }
 
         public ExamDTO Get(int id)
@@ -95,6 +101,22 @@ namespace Timetable.Service.Services
             return mapper.Map<IEnumerable<Exam>, IEnumerable<ExamDTO>>(exams);
         }
 
+
+        public IEnumerable<ExamDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
+            string classroomTitle, string academicGroupName, int page, int pageSize)
+        {
+            Expression<Func<Exam, bool>> where = c => (date == null || c.Date == date) &&
+                      (facultyTitle == null || c.Faculty.FacultyName.ToLower() == facultyTitle.ToLower()) &&
+                      (subjectName == null || c.Subject.SubjectTitle.ToLower() == subjectName.ToLower()) &&
+                      (classroomTitle == null || c.Classroom.ClassroomTitle.ToLower() == classroomTitle.ToLower()) &&
+                      (academicGroupName == null || c.AcademicGroup.GroupName.ToLower() == academicGroupName.ToLower());
+
+            var exams = examRepository.GetMany(where, page, pageSize);
+
+
+            return mapper.Map<IEnumerable<Exam>, IEnumerable<ExamDTO>>(exams);
+
+        }
 
         public IEnumerable<ExamDTO> GetAll()
         {

@@ -29,6 +29,10 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
         public IEnumerable<AcademicGroupDTO> GetAll()
         {
             var academicGroups = academicGroupRepository.GetAll();
@@ -75,11 +79,12 @@ namespace Timetable.Service.Services
         }
 
         
-        public IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle)
+        public IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle, int page, int pageSize)
         {
-            var academicGroups = academicGroupRepository.GetMany(
-                ag => facultyTitle == null || ag.Faculty.FacultyName.ToLower() == facultyTitle.ToLower()
-                && specialtyTitle == null || ag.Specialty.SpecialtyTitle.ToLower() == specialtyTitle.ToLower());
+            Expression<Func<AcademicGroup, bool>> where = ag => (facultyTitle == null || ag.Faculty.FacultyName.ToLower() == facultyTitle.ToLower())
+                && (specialtyTitle == null || ag.Specialty.SpecialtyTitle.ToLower() == specialtyTitle.ToLower());
+
+            var academicGroups = academicGroupRepository.GetMany(where,page, pageSize);
 
 
             return mapper.Map<IEnumerable<AcademicGroup>, IEnumerable<AcademicGroupDTO>>(academicGroups);

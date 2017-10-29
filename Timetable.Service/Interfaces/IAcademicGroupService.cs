@@ -13,7 +13,7 @@ namespace Timetable.Service.Interfaces
         IEnumerable<AcademicGroupDTO> GetByFacultyId(int facultyId);
         IEnumerable<AcademicGroupDTO> GetBySpecialty(string specialtyName);
         IEnumerable<AcademicGroupDTO> GetBySpecialtyId(int specialtyId);
-        IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle);
+        IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle, int page, int pageSize);
         AcademicGroupDTO Get(string groupName);
         
     }

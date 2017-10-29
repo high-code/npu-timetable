@@ -5,9 +5,9 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Timetable.WebApi.Controllers
+namespace Timetable.WebApi.Controllers.v1
 {
-    public class ExamController : ApiController
+    public class SubjectController : ApiController
     {
     }
 }

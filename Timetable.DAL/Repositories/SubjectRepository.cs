@@ -24,14 +24,17 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(s => s.SubjectId == id);
         }
 
-        public override IEnumerable<Subject> GetMany(Expression<Func<Subject, bool>> where)
+        public IEnumerable<Subject> GetMany(Expression<Func<Subject, bool>> where, int page, int pageSize)
         {
             return DbContext.Subjects
                 .Include(s => s.Chair)
                 .Include(s => s.SubjectType)
                 .Include(s => s.Teacher)
-                .Where(where);
-
+                .Where(where)
+                .OrderBy(s => s.SubjectId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
         public IEnumerable<Subject> GetSubjectsByTitle(string title)
         {

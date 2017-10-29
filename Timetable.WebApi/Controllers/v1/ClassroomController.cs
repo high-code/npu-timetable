@@ -7,17 +7,19 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Timetable.Service.Interfaces;
 using Timetable.Service.DTO;
+using Timetable.WebApi.Routes;
 
 namespace Timetable.WebApi.Controllers
 {
     /// <summary>
     /// Operating with classrooms in university
     /// </summary>
-    [RoutePrefix("api/classrooms")]
+    [ApiV1RoutePrefix("classrooms")]
     public class ClassroomController : ApiController
     {
         IClassroomService classroomService;
 
+        
         public ClassroomController(IClassroomService classroomServ)
         {
             this.classroomService = classroomServ;

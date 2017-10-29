@@ -23,12 +23,15 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(ag => ag.AcademicGroupId == id);
         }
 
-        public override IEnumerable<AcademicGroup> GetMany(Expression<Func<AcademicGroup, bool>> where)
+        public IEnumerable<AcademicGroup> GetMany(Expression<Func<AcademicGroup, bool>> where,int page, int pageSize)
         {
             return DbContext.AcademicGroups
                 .Include(ag => ag.Faculty)
                 .Include(ag => ag.Specialty)
-                .Where(where);
+                .Where(where)
+                .OrderBy(ag => ag.AcademicGroupId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
         }
 
         // Get methods (By name,faculty,specialty)       

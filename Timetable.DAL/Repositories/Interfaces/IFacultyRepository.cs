@@ -11,6 +11,7 @@ namespace Timetable.DAL.Repositories.Interfaces
     {
         Faculty GetFacultyByName(string name);
 
+        
 
         
     }

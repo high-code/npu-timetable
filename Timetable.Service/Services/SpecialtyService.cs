@@ -23,6 +23,11 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
+
         public SpecialtyDTO Get(int specialtyId)
         {
             var specialtyDTO = specialtyRepository.GetById(specialtyId);

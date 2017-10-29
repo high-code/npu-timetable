@@ -18,5 +18,10 @@ namespace Timetable.Service.Interfaces
         IEnumerable<LessonDetailsDTO> GetBySubjectTitle(string subject);
         IEnumerable<LessonDetailsDTO> GetBySubjectId(int subjectId);
         IEnumerable<LessonDetailsDTO> GetByTeacherId(int teacherId);
+
+        IEnumerable<LessonDetailsDTO> Filter(string facultyTitle, string subjectName,string subjectTypeName,
+            int? weekday,int? lessonOrder, bool? isEnumerator, string classroomTitle, string academicGroupName, int page, int pageSize);
+
+
     }
 }

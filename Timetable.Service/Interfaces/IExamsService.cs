@@ -19,6 +19,8 @@ namespace Timetable.Service.Interfaces
         IEnumerable<ExamDTO> GetByAcademicGroupName(string academicGroup);
         IEnumerable<ExamDTO> GetByAcademicGroupId(int academicGroupId);
         IEnumerable<ExamDTO> GetByDate(DateTime date);
-        
+
+        IEnumerable<ExamDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
+            string classroomTitle, string academicGroupName, int page, int pageSize);
     }
 }

@@ -7,11 +7,12 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Timetable.Service.DTO;
 using Timetable.Service.Interfaces;
+using Timetable.WebApi.Routes;
 
-namespace Timetable.WebApi.Controllers
+namespace Timetable.WebApi.Controllers.v1
 {
 
-    [RoutePrefix("api/faculties")]
+    [ApiV1RoutePrefix("faculties")]
     public class FacultyController : ApiController
     {
         IFacultyService facultyService;

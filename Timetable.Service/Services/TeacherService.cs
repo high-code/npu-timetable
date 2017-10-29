@@ -24,6 +24,13 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+
+        public int Count
+        {
+            get { return teacherRepository.Count; }
+        }
+
+
         public TeacherDTO Get(int id)
         {
             var teacher = teacherRepository.GetById(id);

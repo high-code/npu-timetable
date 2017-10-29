@@ -9,6 +9,6 @@ namespace Timetable.Service.Interfaces
 {
     public interface ISubjectTypeService : IService<SubjectTypeDTO>
     {
-        SubjectTypeDTO Get(string name);
+       
     }
 }

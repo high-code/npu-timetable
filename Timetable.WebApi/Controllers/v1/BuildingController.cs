@@ -8,10 +8,11 @@ using System.Web.Http.Description;
 using Timetable.Service.Services;
 using Timetable.Service.Interfaces;
 using Timetable.Service.DTO;
+using Timetable.WebApi.Routes;
 
-namespace Timetable.WebApi.Controllers
+namespace Timetable.WebApi.Controllers.v1
 {
-    [RoutePrefix("api/buildings")]
+    [ApiV1RoutePrefix("buildings")]
     public class BuildingController : ApiController
     {
         IBuildingService buildingService;

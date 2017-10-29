@@ -24,6 +24,12 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
+
+
         public SubjectDTO Get(int id)
         {
             var subject = subjectRepository.GetById(id);
@@ -59,6 +65,9 @@ namespace Timetable.Service.Services
 
             return mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectDTO>>(teachers);
         }
+
+       
+
 
         public IEnumerable<SubjectDTO> GetAll()
         {

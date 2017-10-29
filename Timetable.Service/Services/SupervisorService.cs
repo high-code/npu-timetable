@@ -28,6 +28,10 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
 
         public SupervisorDTO Get(int id)
         {

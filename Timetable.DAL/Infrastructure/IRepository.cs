@@ -7,6 +7,12 @@ namespace Timetable.DAL.Infrastructure
 {
     public interface IRepository<T> where T : class
     {
+
+        int Count
+        {
+            get;
+        }
+
         void Add(T entity);
 
         void Update(T entity);
@@ -19,7 +25,7 @@ namespace Timetable.DAL.Infrastructure
 
         IEnumerable<T> GetAll();
 
-        IEnumerable<T> GetMany(Expression<Func<T, bool>> where);
+        IEnumerable<T> GetMany(Expression<Func<T, bool>> where,int page, int pageSize);
 
 
     }

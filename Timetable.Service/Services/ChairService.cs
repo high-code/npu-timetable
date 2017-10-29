@@ -25,6 +25,11 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
+
 
         public ChairDTO Get(int id)
         {

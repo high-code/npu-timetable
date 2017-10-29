@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories;
@@ -9,7 +10,9 @@ namespace Timetable.DAL.Repositories.Interfaces
 {
     public interface ILessonRepository : IRepository<Lesson>
     {
+        
 
+        
         IEnumerable<Lesson> GetLessonsForFaculty(string faculty);
         IEnumerable<Lesson> GetLessonsByFacultyId(int facultyId);
         IEnumerable<Lesson> GetLessonsByAcademicGroup(string academicGroup);

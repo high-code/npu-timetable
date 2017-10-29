@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Data.Entity;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
@@ -13,6 +14,18 @@ namespace Timetable.DAL.Repositories
         public SpecialtyRepository(IDbFactory dbFactory)
             : base(dbFactory)
         { }
+
+
+        public IEnumerable<Specialty> GetMany(Expression<Func<Specialty, bool>> where, int page, int pageSize)
+        {
+            return DbContext.Specialties
+                .Where(where)
+                .OrderBy(s => s.SpecialtyId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+        }
+
 
         public Specialty GetSpecialtyByTitle(string title)
         {

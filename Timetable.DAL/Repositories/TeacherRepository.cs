@@ -22,12 +22,18 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(t => t.UserId == id);
         }
 
-        public override IEnumerable<Teacher> GetMany(Expression<Func<Teacher, bool>> where)
+
+        public override IEnumerable<Teacher> GetMany(Expression<Func<Teacher, bool>> where, int page, int pageSize)
         {
             return DbContext.Teachers
                 .Include(t => t.Chairs)
-                .Where(where);
+                .Where(where)
+                .OrderBy(t => t.UserId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
+
 
         public IEnumerable<Teacher> GetTeachersByChair(string chair)
         {

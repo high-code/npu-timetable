@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
@@ -13,9 +14,10 @@ namespace Timetable.DAL.Repositories
             : base(dbFactory)
         { }
 
-        public SubjectType GetSubjectTypeByName(string name)
+
+        public IEnumerable<SubjectType> GetMany(Expression<Func<SubjectType, bool>> where, int page, int pageSize)
         {
-            return DbContext.SubjectTypes.FirstOrDefault(st => st.SubjectTypeTitle.ToLower() == name.ToLower());
+            throw new NotImplementedException();
         }
 
 

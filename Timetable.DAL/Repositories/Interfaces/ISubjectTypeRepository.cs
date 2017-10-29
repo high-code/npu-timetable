@@ -9,7 +9,7 @@ namespace Timetable.DAL.Repositories.Interfaces
 {
     public interface ISubjectTypeRepository : IRepository<SubjectType>
     {
-        SubjectType GetSubjectTypeByName(string type);
+       
 
     }
 }

@@ -17,11 +17,12 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort />
+	<UseGlobalApplicationHostFile>True</UseGlobalApplicationHostFile>
+    <IISExpressSSLPort>44357</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    <UseGlobalApplicationHostFile />
+    
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -117,23 +118,27 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Controllers\AcademicGroupController.cs" />
-    <Compile Include="Controllers\BuildingController.cs" />
-    <Compile Include="Controllers\ChairController.cs" />
-    <Compile Include="Controllers\ClassroomController.cs" />
-    <Compile Include="Controllers\ConsultController.cs" />
-    <Compile Include="Controllers\ExamController.cs" />
-    <Compile Include="Controllers\FacultyController.cs" />
-    <Compile Include="Controllers\LessonController.cs" />
-    <Compile Include="Controllers\SpecialtyController.cs" />
-    <Compile Include="Controllers\StudentController.cs" />
-    <Compile Include="Controllers\SubjectController.cs" />
-    <Compile Include="Controllers\SupervisorController.cs" />
-    <Compile Include="Controllers\TeacherController.cs" />
+    <Compile Include="Controllers\v1\AcademicGroupController.cs" />
+    <Compile Include="Controllers\v1\BuildingController.cs" />
+    <Compile Include="Controllers\v1\ChairController.cs" />
+    <Compile Include="Controllers\v1\ClassroomController.cs" />
+    <Compile Include="Controllers\v1\ConsultController.cs" />
+    <Compile Include="Controllers\v1\ExamController.cs" />
+    <Compile Include="Controllers\v1\FacultyController.cs" />
+    <Compile Include="Controllers\v1\LessonController.cs" />
+    <Compile Include="Controllers\v1\SpecialtyController.cs" />
+    <Compile Include="Controllers\v1\StudentController.cs" />
+    <Compile Include="Controllers\v1\SubjectController.cs" />
+    <Compile Include="Controllers\v1\SupervisorController.cs" />
+    <Compile Include="Controllers\v1\TeacherController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SearchLessonModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routes\ApiV1RoutePrefixAttribute.cs" />
+    <Compile Include="Routes\ApiVersionConstraint.cs" />
+    <Compile Include="Routes\NamespaceHttpControllerSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -146,7 +151,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Timetable.Service\Timetable.Service.csproj">
@@ -165,16 +169,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>56677</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52979/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
@@ -28,6 +29,16 @@ namespace Timetable.DAL.Repositories
             
             return DbContext.Chairs
                 .Include(c => c.Faculty);
+        }
+        
+        public IEnumerable<Chair> GetMany(Expression<Func<Chair, bool>> where, int page, int pageSize)
+        {
+            return DbContext.Chairs
+                .Include(c => c.Faculty)
+                .Where(where)
+                .OrderBy(c => c.ChairId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
         }
 
         public Chair GetChairByTitle(string title)

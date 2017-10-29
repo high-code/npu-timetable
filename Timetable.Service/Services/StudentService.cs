@@ -5,6 +5,7 @@ using Timetable.Service.DTO;
 using Timetable.Service.Infrastructure;
 using Timetable.Service.Interfaces;
 
+
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Entities;
@@ -26,6 +27,10 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
 
         public StudentDTO Get(int id)
         {

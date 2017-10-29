@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using Timetable.Service.Infrastructure;
 using Timetable.Service.Interfaces;
 using Timetable.DAL.Entities;
@@ -20,6 +21,11 @@ namespace Timetable.Service.Services
             this.lessonRepository = lessonRepo;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
+        }
+
+        public int Count
+        {
+            get { return lessonRepository.Count; }
         }
 
         public LessonDetailsDTO Get(int id)
@@ -52,6 +58,27 @@ namespace Timetable.Service.Services
             return mapper.Map<IEnumerable<Lesson>, IEnumerable<LessonDetailsDTO>>(lessons);
         }
 
+        
+
+        public IEnumerable<LessonDetailsDTO> Filter(string facultyTitle, string subjectName, string subjectTypeName,
+           int? weekday, int? lessonOrder, bool? isEnumerator, string classroomTitle, string academicGroupName, int page, int pageSize)
+        {
+
+            Expression<Func<Lesson, bool>> where = l => 
+                (facultyTitle == null || l.Faculty.FacultyName.ToLower() == facultyTitle.ToLower()) &&
+                (subjectName == null || l.Subject.SubjectTitle.ToLower() == subjectName.ToLower()) &&
+                (subjectTypeName == null || l.Subject.SubjectType.SubjectTypeTitle.ToLower() == subjectTypeName.ToLower()) &&
+                (weekday == null || l.Weekday == weekday) &&
+                (lessonOrder == null || l.LessonOrder == lessonOrder) &&
+                (isEnumerator == null || l.IsEnumerator == isEnumerator) &&
+                (classroomTitle == null || l.Classroom.ClassroomTitle.ToLower() == classroomTitle.ToLower()) &&
+                (academicGroupName == null || l.AcademicGroup.GroupName.ToLower() == academicGroupName.ToLower());
+
+
+            var lessons = lessonRepository.GetMany(where, page, pageSize);
+
+            return mapper.Map<IEnumerable<Lesson>, IEnumerable<LessonDetailsDTO>>(lessons);
+        }
 
         public IEnumerable<LessonDetailsDTO> GetByAcademicGroupName(string academicGroup)
         {

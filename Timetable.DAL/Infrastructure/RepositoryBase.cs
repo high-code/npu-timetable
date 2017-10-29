@@ -18,6 +18,11 @@ namespace Timetable.DAL.Infrastructure
             private set;
         }
 
+        public virtual int Count
+        {
+            get { return dbSet.Count(); }
+        }
+
         protected TimetableContext DbContext
         {
             get { return dataContext ?? (dataContext = DbFactory.Init()); }
@@ -64,10 +69,12 @@ namespace Timetable.DAL.Infrastructure
             return dbSet.ToList();
         }
 
-        public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
-        {
-            return dbSet.Where(where).ToList();
-        }
+        //public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
+        //{
+        //    return dbSet.Where(where).
+        //        OrderBy(T => T.Id)
+        //        ToList();
+        //}
         
         public T Get(Expression<Func<T, bool>> where)
         {

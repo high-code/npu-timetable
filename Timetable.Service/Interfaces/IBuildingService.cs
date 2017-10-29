@@ -10,6 +10,7 @@ namespace Timetable.Service.Interfaces
     public interface IBuildingService : IService<BuildingDTO>
     {
         BuildingDTO Get(string title);
-        BuildingDTO GetBuildingByAddress(string address);       
+        BuildingDTO GetBuildingByAddress(string address);    
+        
     }
 }

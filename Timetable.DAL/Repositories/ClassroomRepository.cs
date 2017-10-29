@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Data.Entity;
+
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.DAL.Entities;
@@ -27,6 +29,17 @@ namespace Timetable.DAL.Repositories
             return DbContext.Classrooms
                 .Include(c => c.Building);
         }
+
+        public IEnumerable<Classroom> GetMany(Expression<Func<Classroom, bool>> where, int page, int pageSize)
+        {
+            return DbContext.Classrooms
+                .Include(c => c.Building)
+                .Where(where)
+                .OrderBy(c => c.ClassroomId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize);
+        }
+
         public Classroom GetClassroomByTitle(string title)
         {
             return DbContext.Classrooms

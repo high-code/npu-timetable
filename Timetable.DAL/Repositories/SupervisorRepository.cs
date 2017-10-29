@@ -22,11 +22,15 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(s => s.UserId == id);
         }
 
-        public override IEnumerable<Supervisor> GetMany(Expression<Func<Supervisor, bool>> where)
+        public override IEnumerable<Supervisor> GetMany(Expression<Func<Supervisor, bool>> where,int page,int pageSize)
         {
             return DbContext.Supervisors
                 .Include(s => s.Faculty)
-                .Where(where);
+                .Where(where)
+                .OrderBy(s => s.UserId)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
         public IEnumerable<Supervisor> GetSupervisorsByFaculty(string faculty)

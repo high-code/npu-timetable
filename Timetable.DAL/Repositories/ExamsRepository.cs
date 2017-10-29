@@ -26,14 +26,18 @@ namespace Timetable.DAL.Repositories
         }
 
 
-        public override IEnumerable<Exam> GetMany(Expression<Func<Exam, bool>> where)
+        public IEnumerable<Exam> GetMany(Expression<Func<Exam, bool>> where, int page, int pageSize)
         {
             return DbContext.Exams
                 .Include(e => e.AcademicGroup)
                 .Include(e => e.Classroom)
                 .Include(e => e.Faculty)
                 .Include(e => e.Subject)
-                .Where(where);
+                .Where(where)
+                .OrderBy(e => e.Id)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
         public IEnumerable<Exam> GetExamsBySubject(string subject)

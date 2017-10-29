@@ -23,6 +23,11 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
+        public int Count
+        {
+            get { return Count; }
+        }
+
         public SubjectTypeDTO Get(int id)
         {
             var subjectType = subjectTypeRepository.GetById(id);
@@ -30,12 +35,7 @@ namespace Timetable.Service.Services
             return mapper.Map<SubjectType, SubjectTypeDTO>(subjectType);
         }
 
-        public SubjectTypeDTO Get(string name)
-        {
-            var subjectType = subjectTypeRepository.GetSubjectTypeByName(name);
-
-            return mapper.Map<SubjectType, SubjectTypeDTO>(subjectType);
-        }
+        
 
         public IEnumerable<SubjectTypeDTO> GetAll()
         {

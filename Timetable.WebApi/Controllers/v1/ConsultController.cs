@@ -7,11 +7,13 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Timetable.Service.DTO;
 using Timetable.Service.Interfaces;
+using Timetable.WebApi.Routes;
 
-namespace Timetable.WebApi.Controllers
+namespace Timetable.WebApi.Controllers.v1
 {
 
-    [RoutePrefix("api/consults")]
+    
+    [ApiV1RoutePrefix("consults")]
     public class ConsultController : ApiController
     {
         IConsultsService consultsService;
@@ -34,14 +36,14 @@ namespace Timetable.WebApi.Controllers
         [Route()]
         [ResponseType(typeof(IEnumerable<ConsultDTO>))]
         public IHttpActionResult GetConsults(DateTime? date = null,string facultyTitle = null, string subjectName = null,
-             string classroomTitle = null, string academicGroupName = null)
+             string classroomTitle = null, string academicGroupName = null, int page = 1, int pageSize = 5)
         {
 
             var consults = consultsService.Filter(date, facultyTitle, subjectName,classroomTitle,
-                academicGroupName);
+                academicGroupName, page, pageSize);
 
 
-            if (consults == null)
+            if (consults.Count() == 0)
                 return NotFound();
             else
                 return Ok(consults);
