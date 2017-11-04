@@ -9,7 +9,5 @@ namespace Timetable.Service.Interfaces
 {
     public interface IStudentService : IService<StudentDTO>
     {
-        IEnumerable<StudentDTO> GetByAcademicGroupName(string academicGroupName);
-        IEnumerable<StudentDTO> GetByAcademicGroupId(int academicGroupId);
     }
 }

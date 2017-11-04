@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Timetable.DAL.Entities;
+using Timetable.DAL.Specifications;
+
 using Timetable.DAL.Repositories;
 using Timetable.DAL.Infrastructure;
 using System.Data.Entity;
@@ -62,11 +64,23 @@ namespace Timetable.DAL.Repositories
 
             return newStudents;
         }
-        
-
-
-
 
         
+        public static IQueryable<T> MakeIncludesQuery<T>(ISpecification<T> specification, IDbSet<T> dbSet)  where T : class
+        {
+            var query = specification.Includes
+               .Aggregate(dbSet.AsQueryable(),
+                 (current, include) => current.Include(include));
+
+            query = specification.IncludeStrings
+                .Aggregate(query,
+                          (current, include) => current.Include(include));
+
+            return query;
+
+        }
+
+
+
     }
 }

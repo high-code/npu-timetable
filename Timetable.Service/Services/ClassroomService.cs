@@ -4,6 +4,8 @@ using System.Linq;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.Service.Interfaces;
+using Timetable.Service.Infrastructure;
+using Timetable.DAL.Specifications;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.Service.DTO;
 using AutoMapper;
@@ -36,22 +38,29 @@ namespace Timetable.Service.Services
             return mapper.Map<Classroom,ClassroomDTO>(classroom);
         }
 
-        public ClassroomDTO Get(string title)
+        public PagedResult<Classroom, ClassroomDTO> Filter(string buildingTitle, int page, int pageSize)
         {
-            var classroom = classroomRepository.GetClassroomByTitle(title);
+            var classroomSpec = new ClassroomPagedSpecification(buildingTitle, page, pageSize);
 
-            return mapper.Map<Classroom, ClassroomDTO>(classroom);
+            
+
+
+            var classroomsPaged = new PagedResult<Classroom, ClassroomDTO>(classroomSpec, classroomRepository,
+                mapper);
+
+
+            return classroomsPaged;
+
         }
 
-        public IEnumerable<ClassroomDTO> GetByBuildingTitle(string building)
-        {
-            var classrooms = classroomRepository.GetClassroomsByBuilding(building);
-            return mapper.Map<IEnumerable<Classroom>, IEnumerable<ClassroomDTO>>(classrooms);
-        }
 
-        public IEnumerable<ClassroomDTO> GetByBuildingId(int buildingId)
+        public IEnumerable<ClassroomDTO> Filter(string buildingTitle)
         {
-            var classrooms = classroomRepository.GetClassroomsByBuildingId(buildingId);
+            var classroomSpec = new ClassroomSpecification(buildingTitle);
+
+            
+
+            var classrooms = classroomRepository.GetMany(classroomSpec);
 
             return mapper.Map<IEnumerable<Classroom>, IEnumerable<ClassroomDTO>>(classrooms);
         }

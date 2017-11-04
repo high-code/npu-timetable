@@ -7,10 +7,8 @@ using Timetable.DAL.Repositories;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface ISpecialtyRepository : IRepository<Specialty>
+    public interface ISpecialtyRepository : IPageableRepository<Specialty>
     {
-        Specialty GetSpecialtyByTitle(string title);
-        Specialty GetSpecialtyByCode(string code);
-        Specialty GetSpecialtyByAbbreviation(string abbr);
+       
     }
 }

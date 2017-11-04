@@ -4,13 +4,11 @@ using System.Linq;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories;
-
+using Timetable.DAL.Specifications;
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface IChairRepository : IRepository<Chair>
+    public interface IChairRepository : IPageableRepository<Chair>
     {
-        Chair GetChairByTitle(string title);
-        IEnumerable<Chair> GetChairsByFacultyName(string faculty);
-        IEnumerable<Chair> GetChairsByFacultyId(int facultyId);
+       
     }
 }

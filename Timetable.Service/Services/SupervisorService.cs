@@ -47,19 +47,6 @@ namespace Timetable.Service.Services
             return mapper.Map<IEnumerable<Supervisor>, IEnumerable<SupervisorDTO>>(supervisors);
         }
 
-        public IEnumerable<SupervisorDTO> GetByFacultyTitle(string facultyTitle)
-        {
-            var supervisors = supervisorRepository.GetSupervisorsByFaculty(facultyTitle);
-
-            return mapper.Map<IEnumerable<Supervisor>, IEnumerable<SupervisorDTO>>(supervisors);
-        }
-
-        public IEnumerable<SupervisorDTO> GetByFacultyId(int facultyId)
-        {
-            var supervisors = supervisorRepository.GetSupervisorsByFacultyId(facultyId);
-
-            return mapper.Map<IEnumerable<Supervisor>, IEnumerable<SupervisorDTO>>(supervisors);
-        }
 
         public void Create(SupervisorDTO supervisor)
         {

@@ -9,7 +9,7 @@ namespace Timetable.DAL.Repositories.Interfaces
 {
     public interface IFacultyRepository : IRepository<Faculty>
     {
-        Faculty GetFacultyByName(string name);
+        
 
         
 

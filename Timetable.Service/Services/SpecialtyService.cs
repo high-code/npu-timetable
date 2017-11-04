@@ -42,26 +42,6 @@ namespace Timetable.Service.Services
             return mapper.Map<IEnumerable<Specialty>, IEnumerable<SpecialtyDTO>>(specialties);
         }
 
-        public SpecialtyDTO GetSpecialtyByAbbreviation(string abbreviation)
-        {
-            var specialty = specialtyRepository.GetSpecialtyByAbbreviation(abbreviation);
-
-            return mapper.Map<Specialty, SpecialtyDTO>(specialty);
-        }
-
-        public SpecialtyDTO GetSpecialtyByCode(string code)
-        {
-            var specialty = specialtyRepository.GetSpecialtyByCode(code);
-
-            return mapper.Map<Specialty, SpecialtyDTO>(specialty);
-        }
-
-        public SpecialtyDTO GetSpecialtyByTitle(string title)
-        {
-            var specialty = specialtyRepository.GetSpecialtyByTitle(title);
-
-            return mapper.Map<Specialty, SpecialtyDTO>(specialty);
-        }
 
         public void Create(SpecialtyDTO specialtyDTO)
         {

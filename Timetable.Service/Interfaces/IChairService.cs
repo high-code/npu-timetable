@@ -9,10 +9,10 @@ namespace Timetable.Service.Interfaces
 {
     public interface IChairService : IService<ChairDTO>
     {
-       
-        IEnumerable<ChairDTO> GetByFacultyName(string faculty);
-        IEnumerable<ChairDTO> GetByFacultyId(int facultyId);
-        ChairDTO Get(string title);
+
+        PagedResult<Chair, ChairDTO> Filter(string facultyTitle, int page, int pageSize);
+        IEnumerable<ChairDTO> Filter(string facultyTitle);
+        PagedResult<Teacher, TeacherDTO> GetChairTeachers(int id, int page, int pageSize);
 
     }
 }

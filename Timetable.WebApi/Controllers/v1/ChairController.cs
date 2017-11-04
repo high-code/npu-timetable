@@ -40,7 +40,7 @@ namespace Timetable.WebApi.Controllers.v1
             }
             else
             {
-                var chairs = chairService.GetByFacultyName(facultyTitle);
+                var chairs = chairService.Filter(facultyTitle);
 
                 if (chairs == null)
                     return NotFound();
@@ -69,5 +69,35 @@ namespace Timetable.WebApi.Controllers.v1
         }
 
 
+        /// <summary>
+        /// Returns teachers of chair
+        /// </summary>
+        /// <param name="id">Chair id</param>
+        /// <param name="page">Page number</param>
+        /// <param name="pageSize">Count of items on the page</param>
+        /// <returns></returns>
+        [Route("{id:int}/teachers")]
+        [ResponseType(typeof(IEnumerable<TeacherDTO>))]
+        public IHttpActionResult GetChairTeachers(int id, int page = 1, int pageSize = 5)
+        {
+            var teachersPaged = chairService.GetChairTeachers(id, page, pageSize);
+
+
+            if (teachersPaged.Result.Count() == 0)
+                return NotFound();
+
+            else
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, teachersPaged.Result);
+
+                response.Headers.Add("X-Paging-PageNo", teachersPaged.PageNumber.ToString());
+                response.Headers.Add("X-Paging-PageSize", teachersPaged.PageSize.ToString());
+                response.Headers.Add("X-Paging-PageCount", teachersPaged.PageCount.ToString());
+                response.Headers.Add("X-Paging-TotalRecordCount", teachersPaged.TotalRecordsCount.ToString());
+
+                return ResponseMessage(response);
+            }
+
+        }
     }
 }

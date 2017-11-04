@@ -5,6 +5,7 @@ using System.Data.Entity;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
+using Timetable.DAL.Specifications;
 using System.Linq.Expressions;
 
 namespace Timetable.DAL.Repositories
@@ -24,37 +25,16 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(s => s.SubjectId == id);
         }
 
-        public IEnumerable<Subject> GetMany(Expression<Func<Subject, bool>> where, int page, int pageSize)
+        public IEnumerable<Subject> List(IPagedSpecification<Subject> specification)
         {
-            return DbContext.Subjects
-                .Include(s => s.Chair)
-                .Include(s => s.SubjectType)
-                .Include(s => s.Teacher)
-                .Where(where)
+            var query = RepositoryHelper.MakeIncludesQuery(specification, DbContext.Subjects);
+
+            return query
+                .Where(specification.Criteria)
                 .OrderBy(s => s.SubjectId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip(specification.Skip)
+                .Take(specification.Take)
                 .ToList();
-        }
-        public IEnumerable<Subject> GetSubjectsByTitle(string title)
-        {
-            return DbContext.Subjects.Where(s => s.SubjectTitle.ToLower() == title.ToLower());
-        }
-
-        public IEnumerable<Subject> GetSubjectsByChair(string chair)
-        {
-            return DbContext.Subjects.Where(s => s.Chair.ChairTitle.ToLower() == chair.ToLower());
-
-        }
-
-        public IEnumerable<Subject> GetSubjectsByChairId(int chairId)
-        {
-            return DbContext.Subjects.Where(s => s.ChairId == chairId);
-        }
-
-        public IEnumerable<Subject> GetSubjectsByTeacherId(int teacherId)
-        {
-            return DbContext.Subjects.Where(s => s.TeacherId == teacherId);
         }
     }
 

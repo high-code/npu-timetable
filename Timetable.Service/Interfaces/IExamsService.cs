@@ -9,18 +9,7 @@ namespace Timetable.Service.Interfaces
 {
     public interface IExamsService : IService<ExamDTO>
     {
-        
-        IEnumerable<ExamDTO> GetByFacultyTitle(string faculty);
-        IEnumerable<ExamDTO> GetByFacultyId(int facultyId);
-        IEnumerable<ExamDTO> GetBySubjectTitle(string subject);
-        IEnumerable<ExamDTO> GetBySubjectId(int subjectId);
-        IEnumerable<ExamDTO> GetByClassroomTitle(string classroom);
-        IEnumerable<ExamDTO> GetByClassroomId(int classroomId);
-        IEnumerable<ExamDTO> GetByAcademicGroupName(string academicGroup);
-        IEnumerable<ExamDTO> GetByAcademicGroupId(int academicGroupId);
-        IEnumerable<ExamDTO> GetByDate(DateTime date);
-
         IEnumerable<ExamDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
-            string classroomTitle, string academicGroupName, int page, int pageSize);
+            string classroomTitle, string academicGroupName);
     }
 }

@@ -57,5 +57,39 @@ namespace Timetable.WebApi.Controllers.v1
         }
 
 
+        /// <summary>
+        /// Returns classrooms of building
+        /// </summary>
+        /// <param name="id">Building id</param>
+        /// <param name="page">Number of page</param>
+        /// <param name="pageSize">Count of items on the page</param>
+        /// <returns></returns>
+        [Route("{id:int}/classrooms")]
+        [ResponseType(typeof(IEnumerable<ClassroomDTO>))]
+        public IHttpActionResult GetBuildingClassrooms(int id, int page = 1, int pageSize = 5)
+        {
+            var classroomsPaged = buildingService.GetBuildingClassrooms(id, page, pageSize);
+
+            if(classroomsPaged.Result.Count() == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var response = Request.CreateResponse(HttpStatusCode.OK, classroomsPaged.Result);
+
+                response.Headers.Add("X-Paging-PageNo", classroomsPaged.PageNumber.ToString());
+                response.Headers.Add("X-Paging-PageSize", classroomsPaged.PageSize.ToString());
+                response.Headers.Add("X-Paging-PageCount", classroomsPaged.PageCount.ToString());
+                response.Headers.Add("X-Paging-TotalRecordCount", classroomsPaged.TotalRecordsCount.ToString());
+
+                return ResponseMessage(response);
+            }
+        }
+
+
+
+        
+
     }
 }

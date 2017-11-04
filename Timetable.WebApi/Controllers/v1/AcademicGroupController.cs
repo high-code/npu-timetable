@@ -15,10 +15,18 @@ namespace Timetable.WebApi.Controllers.v1
     public class AcademicGroupController : ApiController
     {
         IAcademicGroupService academicGroupService;
+        ILessonService lessonService;
+        IExamsService examsService;
+        IConsultsService consultsService;
 
-        public AcademicGroupController(IAcademicGroupService academicGroupService)
+
+        public AcademicGroupController(IAcademicGroupService academicGroupService, ILessonService lessonService, IExamsService examsService,
+            IConsultsService consultsService)
         {
             this.academicGroupService = academicGroupService;
+            this.lessonService = lessonService;
+            this.examsService = examsService;
+            this.consultsService = consultsService;
         }
 
 
@@ -36,34 +44,21 @@ namespace Timetable.WebApi.Controllers.v1
         public IHttpActionResult GetAcademicGroups(string facultyTitle = null, string specialtyTitle = null, int page = 1, int pageSize = 5)
         {
 
-            IEnumerable<AcademicGroupDTO> academicGroups = null;
-
-            if (facultyTitle == null && specialtyTitle == null)
-            {
-                academicGroups = academicGroupService.GetAll();
-            }
-            else
-            {
-                academicGroups = academicGroupService.Filter(facultyTitle, specialtyTitle,page, pageSize);
-            }
+            var academicGroupsPaged = academicGroupService.Filter(facultyTitle, specialtyTitle, page, pageSize);
 
 
-            if (academicGroups == null)
+           
+            if (academicGroupsPaged.Result == null)
                 return NotFound();
             else
             {
-                int total = academicGroups.Count();
-                int pageCount = total > 0
-                    ? (int)Math.Ceiling(total / (double)pageSize)
-                    : 0;
+                
+                var response = Request.CreateResponse(HttpStatusCode.OK, academicGroupsPaged.Result);
 
-
-                var response = Request.CreateResponse(HttpStatusCode.OK, academicGroups);
-
-                response.Headers.Add("X-Paging-PageNo", page.ToString());
-                response.Headers.Add("X-Paging-PageSize", pageSize.ToString());
-                response.Headers.Add("X-Paging-PageCount", pageCount.ToString());
-                response.Headers.Add("X-Paging-TotalRecordCount", total.ToString());
+                response.Headers.Add("X-Paging-PageNo", academicGroupsPaged.PageNumber.ToString());
+                response.Headers.Add("X-Paging-PageSize", academicGroupsPaged.PageSize.ToString());
+                response.Headers.Add("X-Paging-PageCount", academicGroupsPaged.PageCount.ToString());
+                response.Headers.Add("X-Paging-TotalRecordCount", academicGroupsPaged.TotalRecordsCount.ToString());
 
                 return ResponseMessage(response);
             }
@@ -88,9 +83,63 @@ namespace Timetable.WebApi.Controllers.v1
         }
 
 
+        /// <summary>
+        /// Returns lessons of academic group
+        /// </summary>
+        /// <param name="id">Academic group name</param>
+        /// <returns></returns>
+        [Route("{id:int}/lessons")]
+        [ResponseType(typeof(IEnumerable<LessonDetailsDTO>))]
+        public IHttpActionResult GetAcademicGroupLessons(int id)
+        {
+            var lessons = academicGroupService.GetAcademicGroupLessons(id);
 
 
+            if (lessons == null)
+                return NotFound();
+            else
+                return Ok(lessons);
+        }
 
+
+        /// <summary>
+        /// Return academic group consults
+        /// </summary>
+        /// <param name="id">Academic group id</param>
+        /// <returns>Consults</returns>
+        [Route("{id:int}/consults")]
+        [ResponseType(typeof(IEnumerable<ConsultDTO>))]
+        public IHttpActionResult GetAcademicGroupConsults(int id)
+        {
+            var consults = academicGroupService.GetAcademicGroupConsults(id);
+
+            if (consults.Count() == 0)
+                return NotFound();
+            else
+                return Ok(consults);
+        }
+
+
+        /// <summary>
+        /// Return academic group exams
+        /// </summary>
+        /// <param name="id">Academic group id</param>
+        /// <returns>Exams</returns>
+        [Route("{id:int}/exams")]
+        [ResponseType(typeof(IEnumerable<ExamDTO>))]
+        public IHttpActionResult GetAcademicGroupExams(int id)
+        {
+            var exams = academicGroupService.GetAcademicGroupExams(id);
+
+            if (exams.Count() == 0)
+                return NotFound();
+            else
+                return Ok(exams);
+        }
+
+        
+
+        
 
     }
 }

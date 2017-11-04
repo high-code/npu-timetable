@@ -68,13 +68,18 @@
     <Compile Include="Infrastructure\DbFactory.cs" />
     <Compile Include="Infrastructure\Disposable.cs" />
     <Compile Include="Infrastructure\IDbFactory.cs" />
+    <Compile Include="Infrastructure\IPageableRepository.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
     <Compile Include="Infrastructure\RepositoryBase.cs" />
     <Compile Include="Infrastructure\UnitOfWork.cs" />
-    <Compile Include="Migrations\201710260753494_Initial.cs" />
-    <Compile Include="Migrations\201710260753494_Initial.Designer.cs">
-      <DependentUpon>201710260753494_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201711041534467_Initial.cs" />
+    <Compile Include="Migrations\201711041534467_Initial.Designer.cs">
+      <DependentUpon>201711041534467_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201711041653577_Second.cs" />
+    <Compile Include="Migrations\201711041653577_Second.Designer.cs">
+      <DependentUpon>201711041653577_Second.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -109,17 +114,43 @@
     <Compile Include="Repositories\SupervisorRepository.cs" />
     <Compile Include="Repositories\TeacherRepository.cs" />
     <Compile Include="Repositories\UserRepository.cs" />
+    <Compile Include="Specifications\AcademicGroupPagedSpecification.cs" />
+    <Compile Include="Specifications\AcademicGroupSpecification.cs" />
+    <Compile Include="Specifications\BaseSpecification.cs" />
+    <Compile Include="Specifications\ChairSpecification.cs" />
+    <Compile Include="Specifications\ClassroomPagedSpecification.cs" />
+    <Compile Include="Specifications\ClassroomSpecification.cs" />
+    <Compile Include="Specifications\ConsultByAcademicGroupIdSpecification.cs" />
+    <Compile Include="Specifications\ConsultSpecification.cs" />
+    <Compile Include="Specifications\ExamByAcademicGroupIdSpecification.cs" />
+    <Compile Include="Specifications\ExamSpecification.cs" />
+    <Compile Include="Specifications\FacultySpecification.cs" />
+    <Compile Include="Specifications\IPagedSpecification.cs" />
+    <Compile Include="Specifications\ISpecification.cs" />
+    <Compile Include="Specifications\LessonByAcademicGroupIdSpecification.cs" />
+    <Compile Include="Specifications\LessonPagedSpecification.cs" />
+    <Compile Include="Specifications\LessonSpecification.cs" />
+    <Compile Include="Specifications\PagedBaseSpecification.cs" />
+    <Compile Include="Specifications\ChairPagedSpecification.cs" />
+    <Compile Include="Specifications\SpecialtySpecification.cs" />
+    <Compile Include="Specifications\SubjectPagedSpecification.cs" />
+    <Compile Include="Specifications\SubjectSpecification.cs" />
+    <Compile Include="Specifications\SubjectTypeSpecification.cs" />
+    <Compile Include="Specifications\TeacherPagedSpecification.cs" />
     <Compile Include="StoreSeedData.cs" />
     <Compile Include="TimetableContext.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710260753494_Initial.resx">
-      <DependentUpon>201710260753494_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711041534467_Initial.resx">
+      <DependentUpon>201711041534467_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711041653577_Second.resx">
+      <DependentUpon>201711041653577_Second.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

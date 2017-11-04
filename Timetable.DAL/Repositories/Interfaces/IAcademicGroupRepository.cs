@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Repositories;
 using Timetable.DAL.Infrastructure;
+using Timetable.DAL.Specifications;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
 
-    public interface IAcademicGroupRepository : IRepository<AcademicGroup>
+    public interface IAcademicGroupRepository :  IPageableRepository<AcademicGroup>
     {
-        AcademicGroup GetAcademicGroupByName(string name);
-        IEnumerable<AcademicGroup> GetAcademicGroupBySpecialtyId(int specId);
-        IEnumerable<AcademicGroup> GetAcademicGroupBySpecialtyTitle(string title);
-        IEnumerable<AcademicGroup> GetAcademicGroupsByFacultyId(int facultyId);
-        IEnumerable<AcademicGroup> GetAcademicGroupsByFacultyName(string name);
-
+        
     }
 }

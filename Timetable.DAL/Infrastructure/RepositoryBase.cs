@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
+using Timetable.DAL.Specifications;
 
 namespace Timetable.DAL.Infrastructure
 {
@@ -18,10 +19,7 @@ namespace Timetable.DAL.Infrastructure
             private set;
         }
 
-        public virtual int Count
-        {
-            get { return dbSet.Count(); }
-        }
+       
 
         protected TimetableContext DbContext
         {
@@ -34,10 +32,16 @@ namespace Timetable.DAL.Infrastructure
             dbSet = DbContext.Set<T>();
         }
 
+        public virtual int Count(Expression<Func<T, bool>> where)
+        {
+            return dbSet.Count(where);
+        }
+
         public virtual void Add(T entity)
         {
             dbSet.Add(entity);
         }
+
 
         public virtual void Update(T entity)
         {
@@ -69,13 +73,23 @@ namespace Timetable.DAL.Infrastructure
             return dbSet.ToList();
         }
 
-        //public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where)
-        //{
-        //    return dbSet.Where(where).
-        //        OrderBy(T => T.Id)
-        //        ToList();
-        //}
-        
+        public virtual IEnumerable<T> GetMany(ISpecification<T> specification)
+        {
+            var query = specification.Includes
+               .Aggregate(dbSet.AsQueryable(),
+                 (current, include) => current.Include(include));
+
+            query = specification.IncludeStrings
+                .Aggregate(query,
+                          (current, include) => current.Include(include));
+
+
+
+            return query.Where(specification.Criteria)
+                .ToList();
+               
+        }
+
         public T Get(Expression<Func<T, bool>> where)
         {
             return dbSet.Where(where).FirstOrDefault<T>();

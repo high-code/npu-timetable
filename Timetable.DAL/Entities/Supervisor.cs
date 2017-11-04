@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Timetable.DAL.Entities
 {
-    [Table("Supervisors")]
+
     public class Supervisor : User
     {
         public int FacultyId { get; set; }

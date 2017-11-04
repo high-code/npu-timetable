@@ -7,11 +7,8 @@ using Timetable.DAL.Repositories;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface ISubjectRepository : IRepository<Subject>
+    public interface ISubjectRepository : IPageableRepository<Subject>
     {
-        IEnumerable<Subject> GetSubjectsByTitle(string title);
-        IEnumerable<Subject> GetSubjectsByChair(string chair);
-        IEnumerable<Subject> GetSubjectsByChairId(int chairId);
-        IEnumerable<Subject> GetSubjectsByTeacherId(int teacherId);
+        
     }
 }

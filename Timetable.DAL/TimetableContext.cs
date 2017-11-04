@@ -54,7 +54,25 @@ namespace Timetable.DAL
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           
+            modelBuilder.Entity<User>()
+                 .ToTable("Users")
+                 .Map<Student>(s =>
+                 {
+                     s.ToTable("Students");
+                     s.MapInheritedProperties();
+                 })
+                 .Map<Supervisor>(s =>
+                 {
+                     s.ToTable("Supervisors");
+                     s.MapInheritedProperties();
+                 })
+                 .Map<Teacher>(t =>
+                 {
+                     t.ToTable("Teachers");
+                     t.MapInheritedProperties();
+                 });
+
+            
         }
     }
 }

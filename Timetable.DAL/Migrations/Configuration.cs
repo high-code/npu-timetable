@@ -2,6 +2,7 @@ namespace Timetable.DAL.Migrations
 {
     using System;
     using System.Data.Entity;
+    using System.Collections.Generic;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
@@ -40,20 +41,27 @@ namespace Timetable.DAL.Migrations
             context.Classrooms.AddOrUpdate(x => x.ClassroomId,
                 new Classroom() { ClassroomId = 1, BuildingId = 1, ClassroomTitle = "229a" });
 
+            context.Chairs.AddOrUpdate(x => x.ChairId);
 
-
-            context.Chairs.AddOrUpdate(x => x.ChairId,
-                new Chair() { ChairId = 1, ChairTitle = "Кафедра програмної інженерії", FacultyId = 1 });
-
-            context.Teachers.AddOrUpdate(x => x.UserId,
-                new Teacher()
+            context.Chairs.AddOrUpdate(x => x.ChairId, new Chair()
+            {
+                ChairId = 1,
+                ChairTitle = "Кафедра програмної інженерії",
+                FacultyId = 1,
+                Teachers = new List<Teacher>
                 {
-                    UserId = 1,
-                    UserName = "selinum",
-                    FirstName = "Юрій",
-                    FathersName = "Михайлович",
-                    LastName = "Селін"
-                });
+                    new Teacher() {
+                        UserId = 1,
+                        UserName = "selinum",
+                        FirstName = "Юрій",
+                        FathersName = "Михайлович",
+                        LastName = "Селін"
+                    }
+
+                }
+            });
+
+
 
             context.SubjectTypes.AddOrUpdate(x => x.SubjectTypeId,
                 new SubjectType() { SubjectTypeId = 1, SubjectTypeTitle = "Лекція" });

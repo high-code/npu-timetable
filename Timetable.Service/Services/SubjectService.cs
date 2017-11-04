@@ -5,6 +5,8 @@ using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.Service.Interfaces;
+using Timetable.DAL.Specifications;
+using Timetable.Service.Infrastructure;
 using Timetable.Service.DTO;
 using AutoMapper;
 
@@ -37,37 +39,14 @@ namespace Timetable.Service.Services
             return mapper.Map<Subject, SubjectDTO>(subject);
         }
 
-        public IEnumerable<SubjectDTO> GetByChair(string chair)
+        public PagedResult<Subject, SubjectDTO> Filter(string subjectType, string chairTitle, int? teacherId, int page, int pageSize)
         {
-            var subjects = subjectRepository.GetSubjectsByChair(chair);
+            var subjectSpec = new SubjectPagedSpecification(subjectType, chairTitle, teacherId, page, pageSize);
 
-            return mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectDTO>>(subjects);
+            var pagedSubjects = new PagedResult<Subject, SubjectDTO>(subjectSpec, subjectRepository, mapper);
+
+            return pagedSubjects;
         }
-
-        public IEnumerable<SubjectDTO> GetByChairId(int chairId)
-        {
-            var subjects = subjectRepository.GetSubjectsByChairId(chairId);
-
-            return mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectDTO>>(subjects);
-        }
-
-        public IEnumerable<SubjectDTO> GetByTeacherId(int teacherId)
-        {
-            var teachers = subjectRepository.GetSubjectsByTeacherId(teacherId);
-
-
-            return mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectDTO>>(teachers);
-        }
-
-        public IEnumerable<SubjectDTO> GetByTitle(string title)
-        {
-            var teachers = subjectRepository.GetSubjectsByTitle(title);
-
-            return mapper.Map<IEnumerable<Subject>, IEnumerable<SubjectDTO>>(teachers);
-        }
-
-       
-
 
         public IEnumerable<SubjectDTO> GetAll()
         {

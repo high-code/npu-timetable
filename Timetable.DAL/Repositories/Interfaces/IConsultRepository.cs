@@ -8,7 +8,7 @@ using Timetable.DAL.Infrastructure;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface IConsultRepository : IRepository<Consult>
+    public interface IConsultRepository : IPageableRepository<Consult>
     {
         
     }

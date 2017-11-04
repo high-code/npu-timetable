@@ -37,16 +37,10 @@ namespace Timetable.WebApi.Controllers
         [ResponseType(typeof(IEnumerable<ClassroomDTO>))]
         public IHttpActionResult GetClassrooms(string buildingTitle = null, int page = 1, int pageSize = 5)
         {
-            IEnumerable<ClassroomDTO> classrooms;
-
-            if(buildingTitle != null)
-            {
-                classrooms = classroomService.GetByBuildingTitle(buildingTitle);
-            }
-            else
-            {
-                classrooms = classroomService.GetAll();
-            }
+           
+           
+            var  classrooms = classroomService.Filter(buildingTitle, page, pageSize);
+            
 
             if (classrooms == null)
                 return NotFound();

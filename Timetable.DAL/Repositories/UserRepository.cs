@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Repositories.Interfaces;
-
+using Timetable.DAL.Specifications;
 namespace Timetable.DAL.Repositories
 {
     public abstract class UserRepository<T> : RepositoryBase<T>, IUserRepository<T> where T : User
@@ -19,16 +19,7 @@ namespace Timetable.DAL.Repositories
         {
             return DbContext.Set<T>().FirstOrDefault(t => t.UserName == username);
         }
-
-        public virtual IEnumerable<T> GetMany(Expression<Func<T, bool>> where, int page, int pageSize)
-        {
-            return DbContext.Set<T>()
-                .Where(where)
-                .OrderBy(t => t.UserId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-        }
+         
 
         public T GetUserByName(string firstName, string fathersName, string lastName)
         {
@@ -36,6 +27,19 @@ namespace Timetable.DAL.Repositories
             return DbContext.Set<T>().FirstOrDefault(t => t.FirstName.ToLower() == firstName.ToLower()
                 && t.FathersName.ToLower() == fathersName.ToLower() && t.LastName.ToLower() == lastName.ToLower());
         }
+
+        public virtual IEnumerable<T> List(IPagedSpecification<T> specification)
+        {
+            var query = RepositoryHelper.MakeIncludesQuery(specification, DbContext.Set<T>());
+
+            return query
+                .Where(specification.Criteria)
+                .OrderBy(t => t.UserId)
+                .Skip((specification.PageNumber - 1) * specification.PageSize)
+                .Take(specification.PageSize)
+                .ToList();
+        }
+
     }
 
     

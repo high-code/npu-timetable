@@ -4,17 +4,17 @@ using System.Linq;
 using Timetable.DAL.Entities;
 using Timetable.Service.Infrastructure;
 using Timetable.Service.DTO;
+
 namespace Timetable.Service.Interfaces
 {
     public interface IAcademicGroupService : IService<AcademicGroupDTO>
     {
      
-        IEnumerable<AcademicGroupDTO> GetByFaculty(string facultyName);
-        IEnumerable<AcademicGroupDTO> GetByFacultyId(int facultyId);
-        IEnumerable<AcademicGroupDTO> GetBySpecialty(string specialtyName);
-        IEnumerable<AcademicGroupDTO> GetBySpecialtyId(int specialtyId);
-        IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle, int page, int pageSize);
-        AcademicGroupDTO Get(string groupName);
+        PagedResult<AcademicGroup, AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle, int page, int pageSize);
+        IEnumerable<AcademicGroupDTO> Filter(string facultyTitle, string specialtyTitle);
+        IEnumerable<LessonDetailsDTO> GetAcademicGroupLessons(int id);
+        IEnumerable<ConsultDTO> GetAcademicGroupConsults(int id);
+        IEnumerable<ExamDTO> GetAcademicGroupExams(int id);
         
     }
 }

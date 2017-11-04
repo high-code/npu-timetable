@@ -4,6 +4,7 @@ using System.Linq;
 using System.Data.Entity;
 
 
+
 namespace Timetable.DAL
 {
     public class StoreSeedData : DropCreateDatabaseIfModelChanges<TimetableContext>

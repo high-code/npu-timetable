@@ -6,9 +6,8 @@ using Timetable.DAL.Infrastructure;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface IStudentRepository : IRepository<Student>, IUserRepository<Student>
+    public interface IStudentRepository : IUserRepository<Student>
     {
-        IEnumerable<Student> GetStudentsByAcademicGroupName(string academicGroup);
-        IEnumerable<Student> GetStudentsByAcademicGroupId(int id);
+        
     }
 }

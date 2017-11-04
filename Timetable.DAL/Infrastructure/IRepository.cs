@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using Timetable.DAL.Specifications;
 
 namespace Timetable.DAL.Infrastructure
 {
     public interface IRepository<T> where T : class
     {
 
-        int Count
-        {
-            get;
-        }
+        int Count(Expression<Func<T, bool>> where);
 
         void Add(T entity);
 
@@ -25,8 +23,9 @@ namespace Timetable.DAL.Infrastructure
 
         IEnumerable<T> GetAll();
 
-        IEnumerable<T> GetMany(Expression<Func<T, bool>> where,int page, int pageSize);
+        IEnumerable<T> GetMany(ISpecification<T> specification);
 
+        
 
     }
 }

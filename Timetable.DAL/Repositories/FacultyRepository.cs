@@ -13,16 +13,6 @@ namespace Timetable.DAL.Repositories
             : base(dbFactory)
         { }
 
-
-        public IEnumerable<Faculty> GetMany(Expression<Func<Faculty, bool>> where, int page, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Faculty GetFacultyByName(string facultyName)
-        {
-            return this.DbContext.Faculties.Where(f => f.FacultyName == facultyName).FirstOrDefault();
-        }
     }
 
    

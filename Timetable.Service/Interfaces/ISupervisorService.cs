@@ -9,7 +9,6 @@ namespace Timetable.Service.Interfaces
 {
     public interface ISupervisorService : IService<SupervisorDTO>
     {
-        IEnumerable<SupervisorDTO> GetByFacultyTitle(string faculty);
-        IEnumerable<SupervisorDTO> GetByFacultyId(int facultyId);
+
     }
 }

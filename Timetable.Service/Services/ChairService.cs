@@ -4,6 +4,8 @@ using System.Linq;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.Service.Interfaces;
+using Timetable.DAL.Specifications;
+using Timetable.Service.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.Service.DTO;
 using AutoMapper;
@@ -13,14 +15,16 @@ namespace Timetable.Service.Services
     {
         private readonly IChairRepository chairRepository;
         private readonly IFacultyRepository facultyRepository;
+        private readonly ITeacherRepository teacherRepository;
         private readonly IUnitOfWork unitOfWork;
         private readonly IMapper mapper;
 
         public ChairService(IChairRepository chairRepo, IFacultyRepository facultyRepo, IUnitOfWork unitOfWork,
-            IMapper mapper)
+            ITeacherRepository teacherRepository, IMapper mapper)
         {
             this.chairRepository = chairRepo;
             this.facultyRepository = facultyRepo;
+            this.teacherRepository = teacherRepository;
             this.unitOfWork = unitOfWork;
             this.mapper = mapper;
         }
@@ -37,28 +41,41 @@ namespace Timetable.Service.Services
             return mapper.Map<Chair, ChairDTO>(chair);
         }
 
-        public ChairDTO Get(string title)
-        {
-            var chair = chairRepository.GetChairByTitle(title);
 
-            return mapper.Map<Chair, ChairDTO>(chair);
+        public PagedResult<Chair, ChairDTO> Filter(string facultyTitle, int page, int pageSize)
+        {
+            var chairSpec = new ChairPagedSpecification(facultyTitle, page, pageSize);
+
+            
+
+            var pagedChairs = new PagedResult<Chair, ChairDTO>(chairSpec, chairRepository, mapper);
+
+            return pagedChairs;
+        }
+
+        public IEnumerable<ChairDTO> Filter(string facultyTitle)
+        {
+            var chairSpec = new ChairSpecification(facultyTitle);
+
+
+
+            var chairs = chairRepository.GetMany(chairSpec);
+
+            return mapper.Map<IEnumerable<Chair>, IEnumerable<ChairDTO>>(chairs);
+        }
+
+        public PagedResult<Teacher, TeacherDTO> GetChairTeachers(int id, int page, int pageSize)
+        {
+            var chairSpec = new TeacherPagedSpecification(id, page, pageSize);
+
+            var pagedTeachers = new PagedResult<Teacher, TeacherDTO>(chairSpec,teacherRepository, mapper);
+
+            return pagedTeachers;
         }
 
         public IEnumerable<ChairDTO> GetAll()
         {
             var chairs = chairRepository.GetAll();
-            return mapper.Map<IEnumerable<Chair>, IEnumerable<ChairDTO>>(chairs);
-        }
-
-        public IEnumerable<ChairDTO> GetByFacultyName(string faculty)
-        {
-            var chairs = chairRepository.GetChairsByFacultyName(faculty);
-            return mapper.Map<IEnumerable<Chair>, IEnumerable<ChairDTO>>(chairs);
-        }
-
-        public IEnumerable<ChairDTO> GetByFacultyId(int facultyId)
-        {
-            var chairs = chairRepository.GetChairsByFacultyId(facultyId);
             return mapper.Map<IEnumerable<Chair>, IEnumerable<ChairDTO>>(chairs);
         }
 

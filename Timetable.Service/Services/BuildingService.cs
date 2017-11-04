@@ -6,7 +6,9 @@ using Timetable.DAL.Repositories.Interfaces;
 using Timetable.DAL.Repositories;
 using Timetable.DAL.Infrastructure;
 using Timetable.Service.Interfaces;
+using Timetable.Service.Infrastructure;
 using Timetable.Service.DTO;
+using Timetable.DAL.Specifications;
 using AutoMapper;
 
 namespace Timetable.Service.Services
@@ -14,23 +16,18 @@ namespace Timetable.Service.Services
    public class BuildingService : IBuildingService
    {
        private readonly IBuildingRepository buildingRepository;
+       private readonly IClassroomRepository classroomRepository;
        private readonly IUnitOfWork unitOfWork;
        private readonly IMapper mapper;
 
-       public BuildingService(IBuildingRepository buildingRepo, IUnitOfWork unitOfWork,
+       public BuildingService(IBuildingRepository buildingRepo, IUnitOfWork unitOfWork, IClassroomRepository classroomRepository,
            IMapper mapper)
        {
            this.buildingRepository = buildingRepo;
+           this.classroomRepository = classroomRepository;
            this.unitOfWork = unitOfWork;
            this.mapper = mapper;
        }
-
-
-
-        public int Count
-        {
-            get { return buildingRepository.Count; }
-        }
 
 
         public IEnumerable<BuildingDTO> GetAll()
@@ -47,21 +44,14 @@ namespace Timetable.Service.Services
            return mapper.Map<Building, BuildingDTO>(building);
        }
 
-       public BuildingDTO Get(string title)
-       {
-           var building = buildingRepository.GetBuildingByTitle(title);
+       public PagedResult<Classroom,ClassroomDTO> GetBuildingClassrooms(int id, int page, int pageSize)
+        {
+            var specification = new ClassroomPagedSpecification(id, page, pageSize);
 
+            var pagedClassrooms = new PagedResult<Classroom, ClassroomDTO>(specification, classroomRepository, mapper);
 
-           return mapper.Map<Building, BuildingDTO>(building);
-       }
-
-       public BuildingDTO GetBuildingByAddress(string address)
-       {
-           var building = buildingRepository.GetBuildingByAddress(address);
-
-           return mapper.Map<Building, BuildingDTO>(building);
-
-       }
+            return pagedClassrooms;
+        }
 
        public void Create(BuildingDTO building)
        {

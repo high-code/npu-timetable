@@ -17,12 +17,11 @@
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-	<UseGlobalApplicationHostFile>True</UseGlobalApplicationHostFile>
+    <UseGlobalApplicationHostFile>True</UseGlobalApplicationHostFile>
     <IISExpressSSLPort>44357</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
-    
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
   </PropertyGroup>
@@ -153,6 +152,10 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Timetable.DAL\Timetable.DAL.csproj">
+      <Project>{D4C8A609-A955-41BB-BB7C-0DF9FBF5DFAD}</Project>
+      <Name>Timetable.DAL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Timetable.Service\Timetable.Service.csproj">
       <Project>{1ed4af10-b0f2-4350-b264-64b44165905f}</Project>
       <Name>Timetable.Service</Name>

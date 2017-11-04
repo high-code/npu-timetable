@@ -9,7 +9,6 @@ namespace Timetable.DAL.Repositories.Interfaces
 {
     public interface IBuildingRepository : IRepository<Building>
     {
-        Building GetBuildingByTitle(string title);
-        Building GetBuildingByAddress(string address);
+        
     }
 }

@@ -25,12 +25,6 @@ namespace Timetable.Service.Services
         }
 
 
-        public int Count
-        {
-            get { return teacherRepository.Count; }
-        }
-
-
         public TeacherDTO Get(int id)
         {
             var teacher = teacherRepository.GetById(id);
@@ -40,22 +34,7 @@ namespace Timetable.Service.Services
             return Mapper.Map<Teacher, TeacherDTO>(teacher);
         }
 
-        public IEnumerable<TeacherDTO> GetByChairTitle(string chair)
-        {
-
-            var teachers = teacherRepository.GetTeachersByChair(chair);
-
-            return mapper.Map<IEnumerable<Teacher>, IEnumerable<TeacherDTO>>(teachers);
-            
-        }
-
-        public IEnumerable<TeacherDTO> GetByChairId(int chairId)
-        {
-            var teachers = teacherRepository.GetTeachersByChairId(chairId);
-
-            return mapper.Map<IEnumerable<Teacher>, IEnumerable<TeacherDTO>>(teachers);
-        }
-
+ 
 
         public IEnumerable<TeacherDTO> GetAll()
         {

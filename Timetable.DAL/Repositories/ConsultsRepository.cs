@@ -5,6 +5,7 @@ using System.Data.Entity;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
+using Timetable.DAL.Specifications;
 using System.Linq.Expressions;
 
 namespace Timetable.DAL.Repositories
@@ -24,20 +25,17 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(c => c.Id == id);
         }
 
-        public IEnumerable<Consult> GetMany(Expression<Func<Consult, bool>> where, int page, int pageSize)
+        public IEnumerable<Consult> List(IPagedSpecification<Consult> specification)
         {
-            return DbContext.Consults
-                .Include(c => c.AcademicGroup)
-                .Include(c => c.Classroom)
-                .Include(c => c.Faculty)
-                .Include(c => c.Subject)
-                .Where(where)
+            var query = RepositoryHelper.MakeIncludesQuery(specification, DbContext.Consults);
+
+            return query
+                .Where(specification.Criteria)
                 .OrderBy(c => c.Id)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip(specification.Skip)
+                .Take(specification.Take)
                 .ToList();
         }
-
        
     }
 

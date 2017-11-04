@@ -22,23 +22,12 @@ namespace Timetable.Service.Services
             this.mapper = mapper;
         }
 
-        public int Count
-        {
-            get { return Count; }
-        }
 
         public FacultyDTO Get(int id)
         {
             var faculty = facultyRepository.GetById(id);
 
             return mapper.Map<Faculty, FacultyDTO>(faculty); 
-        }
-
-        public FacultyDTO Get(string name)
-        {
-            var faculty = facultyRepository.GetFacultyByName(name);
-
-            return mapper.Map<Faculty, FacultyDTO>(faculty);
         }
 
         public IEnumerable<FacultyDTO> GetAll()

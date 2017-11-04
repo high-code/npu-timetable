@@ -5,6 +5,7 @@ using System.Data.Entity;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.DAL.Entities;
+using Timetable.DAL.Specifications;
 using System.Linq.Expressions;
 
 namespace Timetable.DAL.Repositories
@@ -22,28 +23,6 @@ namespace Timetable.DAL.Repositories
                 .FirstOrDefault(t => t.UserId == id);
         }
 
-
-        public override IEnumerable<Teacher> GetMany(Expression<Func<Teacher, bool>> where, int page, int pageSize)
-        {
-            return DbContext.Teachers
-                .Include(t => t.Chairs)
-                .Where(where)
-                .OrderBy(t => t.UserId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
-                .ToList();
-        }
-
-
-        public IEnumerable<Teacher> GetTeachersByChair(string chair)
-        {
-            return DbContext.Teachers.Where(t => t.Chairs.Any(c => c.ChairTitle.ToLower() == chair.ToLower()));
-        }
-
-        public IEnumerable<Teacher> GetTeachersByChairId(int chairId)
-        {
-            return DbContext.Teachers.Where(t => t.Chairs.Any(c => c.ChairId == chairId));
-        }
 
         
     }

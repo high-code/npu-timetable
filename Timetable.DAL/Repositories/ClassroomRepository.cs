@@ -7,7 +7,7 @@ using System.Data.Entity;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.DAL.Entities;
-
+using Timetable.DAL.Specifications;
 namespace Timetable.DAL.Repositories
 {
     public class ClassroomRepository : RepositoryBase<Classroom>, IClassroomRepository
@@ -30,37 +30,25 @@ namespace Timetable.DAL.Repositories
                 .Include(c => c.Building);
         }
 
-        public IEnumerable<Classroom> GetMany(Expression<Func<Classroom, bool>> where, int page, int pageSize)
+
+        public IEnumerable<Classroom> List(IPagedSpecification<Classroom> specification)
         {
-            return DbContext.Classrooms
-                .Include(c => c.Building)
-                .Where(where)
+            var query = RepositoryHelper.MakeIncludesQuery(specification, DbContext.Classrooms);
+
+            return query
+                .Where(specification.Criteria)
                 .OrderBy(c => c.ClassroomId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
+                .Skip((specification.PageNumber - 1) * specification.PageSize)
+                .Take(specification.PageSize)
+                .ToList();
         }
 
-        public Classroom GetClassroomByTitle(string title)
-        {
-            return DbContext.Classrooms
-                .Include(c => c.Building)
-                .FirstOrDefault(c => c.ClassroomTitle.ToLower() == title.ToLower());
-        }
+        
 
-        public IEnumerable<Classroom> GetClassroomsByBuilding(string building)
-        {
-            return DbContext.Classrooms
-                .Include(c => c.Building)
-                .Where(c => c.Building.BuildingTitle.ToLower() == building.ToLower());
-        }
 
-        public IEnumerable<Classroom> GetClassroomsByBuildingId(int buildingId)
-        {
-            return DbContext.Classrooms
-                .Include(c => c.Building)
-                .Where(c => c.BuildingId == buildingId);
-        }
 
+
+        
     }
 
    

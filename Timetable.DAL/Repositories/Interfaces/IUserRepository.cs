@@ -7,7 +7,7 @@ using Timetable.DAL.Infrastructure;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface IUserRepository<T> : IRepository<T> where T: User
+    public interface IUserRepository<T> : IPageableRepository<T> where T: User
     {
         T GetUserByUsername(string username);
 

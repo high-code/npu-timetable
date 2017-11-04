@@ -6,6 +6,7 @@ using System.Data.Entity;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
+using Timetable.DAL.Specifications;
 
 namespace Timetable.DAL.Repositories
 {
@@ -16,32 +17,18 @@ namespace Timetable.DAL.Repositories
         { }
 
 
-        public IEnumerable<Specialty> GetMany(Expression<Func<Specialty, bool>> where, int page, int pageSize)
+        public IEnumerable<Specialty> List(IPagedSpecification<Specialty> specification)
         {
-            return DbContext.Specialties
-                .Where(where)
+            var query = RepositoryHelper.MakeIncludesQuery(specification, DbContext.Specialties);
+
+            return query
+                .Where(specification.Criteria)
                 .OrderBy(s => s.SpecialtyId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+                .Skip(specification.Skip)
+                .Take(specification.Take)
                 .ToList();
         }
 
-
-        public Specialty GetSpecialtyByTitle(string title)
-        {
-            return DbContext.Specialties.FirstOrDefault(s => s.SpecialtyTitle.ToLower() == title.ToLower());
-        }
-
-        public Specialty GetSpecialtyByCode(string code)
-        {
-            return DbContext.Specialties.FirstOrDefault(s => s.SpecialtyCode.ToLower() == code.ToLower());
-        }
-
-        public Specialty GetSpecialtyByAbbreviation(string abbreviation)
-        {
-            return DbContext.Specialties.FirstOrDefault(s => s.SpecialtyAbbreviation.ToLower() == abbreviation.ToLower());
-        }
-        
     }
 
 }

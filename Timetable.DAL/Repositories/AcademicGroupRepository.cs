@@ -5,6 +5,7 @@ using System.Data.Entity;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Repositories.Interfaces;
+using Timetable.DAL.Specifications;
 using System.Linq.Expressions;
 
 namespace Timetable.DAL.Repositories
@@ -20,82 +21,23 @@ namespace Timetable.DAL.Repositories
             return DbContext.AcademicGroups
                 .Include(ag => ag.Faculty)
                 .Include(ag => ag.Specialty)
+                .Include(ag => ag.Lessons)
                 .FirstOrDefault(ag => ag.AcademicGroupId == id);
         }
-
-        public IEnumerable<AcademicGroup> GetMany(Expression<Func<AcademicGroup, bool>> where,int page, int pageSize)
+        
+        public IEnumerable<AcademicGroup> List(IPagedSpecification<AcademicGroup> spec)
         {
-            return DbContext.AcademicGroups
-                .Include(ag => ag.Faculty)
-                .Include(ag => ag.Specialty)
-                .Where(where)
+            var query = RepositoryHelper.MakeIncludesQuery(spec, DbContext.AcademicGroups);
+
+            return query
+                .Where(spec.Criteria)
                 .OrderBy(ag => ag.AcademicGroupId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
-        }
-
-        // Get methods (By name,faculty,specialty)       
-        public AcademicGroup GetAcademicGroupByName(string name)
-        {
-
-
-
-
-            var academicGroup = DbContext.AcademicGroups
-                .Where(ag => ag.GroupName.ToLower() == name.ToLower())
-                .FirstOrDefault();
-
-
-            return academicGroup;
-
-        }
-
-
-        public IEnumerable<AcademicGroup>  GetAcademicGroupsByFacultyName(string faculty)
-        {
-            var facultiesGroups  = new List<AcademicGroup>();
-
-            facultiesGroups = DbContext.AcademicGroups
-                .Where(ag => ag.Faculty.FacultyName.ToLower() == faculty.ToLower())
+                .Skip((spec.PageNumber - 1) * spec.PageSize)
+                .Take(spec.PageSize)
                 .ToList();
-
-
-            return facultiesGroups;
+                       
         }
 
-
-        public IEnumerable<AcademicGroup> GetAcademicGroupsByFacultyId(int facultyId)
-        {
-            var facultiesGroup = new List<AcademicGroup>();
-
-            facultiesGroup = DbContext.AcademicGroups
-                .Where(ag => ag.FacultyId == facultyId)
-                .ToList();
-
-            return facultiesGroup;
-        }
-
-        public IEnumerable<AcademicGroup> GetAcademicGroupBySpecialtyTitle(string specialty)
-        {
-            var specialtiesGroups = new List<AcademicGroup>();
-
-            specialtiesGroups = DbContext.AcademicGroups
-                .Where(ag => ag.Specialty.SpecialtyTitle.ToLower() == specialty.ToLower())
-                .ToList();
-
-            return specialtiesGroups;
-        }
-
-       public IEnumerable<AcademicGroup> GetAcademicGroupBySpecialtyId(int specialtyId)
-       {
-           var specialtiesGroups = new List<AcademicGroup>();
-
-           specialtiesGroups = DbContext.AcademicGroups
-               .Where(ag => ag.SpecialtyId == specialtyId)
-               .ToList();
-
-           return specialtiesGroups;
-       }
         /*
         public override void Add(AcademicGroup entity)
         {

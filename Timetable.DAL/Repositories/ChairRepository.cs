@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using Timetable.DAL.Entities;
 using Timetable.DAL.Infrastructure;
 using Timetable.DAL.Repositories.Interfaces;
+using Timetable.DAL.Specifications;
 using System.Data.Entity;
 namespace Timetable.DAL.Repositories
 {
@@ -30,38 +31,20 @@ namespace Timetable.DAL.Repositories
             return DbContext.Chairs
                 .Include(c => c.Faculty);
         }
+       
         
-        public IEnumerable<Chair> GetMany(Expression<Func<Chair, bool>> where, int page, int pageSize)
+        public IEnumerable<Chair> List(IPagedSpecification<Chair> specification)
         {
-            return DbContext.Chairs
-                .Include(c => c.Faculty)
-                .Where(where)
-                .OrderBy(c => c.ChairId)
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize);
-        }
-
-        public Chair GetChairByTitle(string title)
-        {
-            return DbContext.Chairs
-                    .Include(c => c.Faculty)
-                    .FirstOrDefault(c => c.ChairTitle.ToLower() == title.ToLower());
-        }
-
-        public IEnumerable<Chair> GetChairsByFacultyName(string faculty)
-        {
-            return DbContext.Chairs
-                .Include(c => c.Faculty)
-                .Where(c => c.Faculty.FacultyName.ToLower() == faculty.ToLower());
-        }
+            var query = RepositoryHelper.MakeIncludesQuery<Chair>(specification, DbContext.Chairs);
 
 
-        public IEnumerable<Chair> GetChairsByFacultyId(int facultyId)
-        {
-            return DbContext.Chairs
-                .Include(c => c.Faculty)
-                .Where(c => c.FacultyId == facultyId);
+            return query.Where(specification.Criteria)
+                        .OrderBy(c => c.ChairId)
+                        .Skip(specification.Skip)
+                        .Take(specification.Take);
         }
+
+        
 
     }
 

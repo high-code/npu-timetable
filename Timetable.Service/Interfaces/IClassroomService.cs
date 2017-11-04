@@ -9,9 +9,8 @@ namespace Timetable.Service.Interfaces
     public interface IClassroomService : IService<ClassroomDTO>
     {
 
-        IEnumerable<ClassroomDTO> GetByBuildingTitle(string building);
-        IEnumerable<ClassroomDTO> GetByBuildingId(int id);
-        ClassroomDTO Get(string title);
+        PagedResult<Classroom, ClassroomDTO> Filter(string buildingTitle, int page, int pageSize);
+        IEnumerable<ClassroomDTO> Filter(string buildingTitle);
 
     }
 }

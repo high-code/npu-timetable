@@ -9,8 +9,8 @@ namespace Timetable.Service.Interfaces
 {
     public interface IBuildingService : IService<BuildingDTO>
     {
-        BuildingDTO Get(string title);
-        BuildingDTO GetBuildingByAddress(string address);    
+
+        PagedResult<Classroom, ClassroomDTO> GetBuildingClassrooms(int id, int page, int pageSize);
         
     }
 }

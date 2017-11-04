@@ -8,8 +8,6 @@ namespace Timetable.Service.Interfaces
 {
     public interface IFacultyService : IService<FacultyDTO>
     {
-       
-        FacultyDTO Get(string name);
 
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="DTO\TeacherDTO.cs" />
     <Compile Include="Infrastructure\AutoMapperModule.cs" />
     <Compile Include="Infrastructure\IService.cs" />
+    <Compile Include="Infrastructure\PagedResult.cs" />
     <Compile Include="Infrastructure\ServiceModule.cs" />
     <Compile Include="Interfaces\IAcademicGroupService.cs" />
     <Compile Include="Interfaces\IBuildingService.cs" />

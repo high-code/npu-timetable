@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Timetable.DAL.Entities
 {
-    [Table("Students")]
+
     public class Student : User
     {
 

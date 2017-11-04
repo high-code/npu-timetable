@@ -9,6 +9,7 @@ namespace Timetable.Service.Interfaces
 {
     public interface ISubjectService : IService<SubjectDTO>
     {
-        
+        PagedResult<Subject, SubjectDTO> Filter(string subjectType, string chairTitle, int? teacherId, int page, int pageSize);
+
     }
 }

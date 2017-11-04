@@ -9,7 +9,5 @@ namespace Timetable.Service.Interfaces
 {
     public interface ITeacherService : IService<TeacherDTO>
     {
-        IEnumerable<TeacherDTO> GetByChairTitle(string chair);
-        IEnumerable<TeacherDTO> GetByChairId(int chairId);
     }
 }

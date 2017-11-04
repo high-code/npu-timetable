@@ -7,12 +7,10 @@ using Timetable.DAL.Repositories;
 
 namespace Timetable.DAL.Repositories.Interfaces
 {
-    public interface IClassroomRepository : IRepository<Classroom>
+    public interface IClassroomRepository : IPageableRepository<Classroom>
     {
 
-        Classroom GetClassroomByTitle(string title);
-        IEnumerable<Classroom> GetClassroomsByBuilding(string building);
-        IEnumerable<Classroom> GetClassroomsByBuildingId(int buildingId);
+        
         
        
     }

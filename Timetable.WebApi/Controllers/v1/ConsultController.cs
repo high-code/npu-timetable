@@ -36,11 +36,11 @@ namespace Timetable.WebApi.Controllers.v1
         [Route()]
         [ResponseType(typeof(IEnumerable<ConsultDTO>))]
         public IHttpActionResult GetConsults(DateTime? date = null,string facultyTitle = null, string subjectName = null,
-             string classroomTitle = null, string academicGroupName = null, int page = 1, int pageSize = 5)
+             string classroomTitle = null, string academicGroupName = null)
         {
 
             var consults = consultsService.Filter(date, facultyTitle, subjectName,classroomTitle,
-                academicGroupName, page, pageSize);
+                academicGroupName);
 
 
             if (consults.Count() == 0)

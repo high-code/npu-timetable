@@ -64,22 +64,18 @@ namespace Timetable.WebApi.Controllers.v1
            int? weekday = null, int? lessonOrder = null, bool? isEnumerator = null, string classroomTitle = null, string academicGroupName = null, int page = 1, int pageSize = 10)
         {
 
-            var lessonsDetails = lessonService.Filter(facultyTitle, subjectName, subjectTypeName,
+            var lessonsDetailsPaged = lessonService.Filter(facultyTitle, subjectName, subjectTypeName,
                 weekday, lessonOrder, isEnumerator, classroomTitle, academicGroupName, page, pageSize);
 
-            int total = lessonsDetails.Count();
-            int pageCount = total > 0
-                ? (int)Math.Ceiling(total / (double)pageSize)
-                : 0;
 
-            var response = Request.CreateResponse(HttpStatusCode.OK, lessonsDetails);
+            var response = Request.CreateResponse(HttpStatusCode.OK, lessonsDetailsPaged.Result);
 
-            response.Headers.Add("X-Paging-PageNo", page.ToString());
-            response.Headers.Add("X-Paging-PageSize", pageSize.ToString());
-            response.Headers.Add("X-Paging-PageCount", pageCount.ToString());
-            response.Headers.Add("X-Paging-TotalRecordCount", total.ToString());
+            response.Headers.Add("X-Paging-PageNo", lessonsDetailsPaged.PageNumber.ToString());
+            response.Headers.Add("X-Paging-PageSize", lessonsDetailsPaged.PageSize.ToString());
+            response.Headers.Add("X-Paging-PageCount", lessonsDetailsPaged.PageCount.ToString());
+            response.Headers.Add("X-Paging-TotalRecordCount", lessonsDetailsPaged.TotalRecordsCount.ToString());
 
-            if (lessonsDetails.Count() == 0)
+            if (lessonsDetailsPaged.Result.Count() == 0)
                 return NotFound();
             else
                 return ResponseMessage(response);

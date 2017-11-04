@@ -47,20 +47,7 @@ namespace Timetable.Service.Services
             return mapper.Map<IEnumerable<Student>, IEnumerable<StudentDTO>>(students);
         }
 
-        public IEnumerable<StudentDTO> GetByAcademicGroupName(string name)
-        {
-            var students = studentRepository.GetStudentsByAcademicGroupName(name);
 
-            return mapper.Map<IEnumerable<Student>, IEnumerable<StudentDTO>>(students);
-        }
-
-
-        public IEnumerable<StudentDTO> GetByAcademicGroupId(int academicGroupId)
-        {
-            var students = studentRepository.GetStudentsByAcademicGroupId(academicGroupId);
-
-            return mapper.Map<IEnumerable<Student>, IEnumerable<StudentDTO>>(students);
-        }
 
         public void Create(StudentDTO student)
         {

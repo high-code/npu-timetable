@@ -14,13 +14,6 @@ namespace Timetable.DAL.Repositories
             : base(dbFactory)
         { }
 
-
-        public IEnumerable<SubjectType> GetMany(Expression<Func<SubjectType, bool>> where, int page, int pageSize)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 
     

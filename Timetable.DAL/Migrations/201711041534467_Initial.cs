@@ -114,7 +114,7 @@ namespace Timetable.DAL.Migrations
                 "dbo.Users",
                 c => new
                     {
-                        UserId = c.Int(nullable: false, identity: true),
+                        UserId = c.Int(nullable: false),
                         UserName = c.String(),
                         FirstName = c.String(),
                         LastName = c.String(),
@@ -223,12 +223,14 @@ namespace Timetable.DAL.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false),
+                        UserName = c.String(),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        FathersName = c.String(),
                         AcademicGroupId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Users", t => t.UserId)
                 .ForeignKey("dbo.AcademicGroups", t => t.AcademicGroupId, cascadeDelete: true)
-                .Index(t => t.UserId)
                 .Index(t => t.AcademicGroupId);
             
             CreateTable(
@@ -236,12 +238,14 @@ namespace Timetable.DAL.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false),
+                        UserName = c.String(),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        FathersName = c.String(),
                         FacultyId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Users", t => t.UserId)
                 .ForeignKey("dbo.Faculties", t => t.FacultyId, cascadeDelete: true)
-                .Index(t => t.UserId)
                 .Index(t => t.FacultyId);
             
             CreateTable(
@@ -249,20 +253,19 @@ namespace Timetable.DAL.Migrations
                 c => new
                     {
                         UserId = c.Int(nullable: false),
+                        UserName = c.String(),
+                        FirstName = c.String(),
+                        LastName = c.String(),
+                        FathersName = c.String(),
                     })
-                .PrimaryKey(t => t.UserId)
-                .ForeignKey("dbo.Users", t => t.UserId)
-                .Index(t => t.UserId);
+                .PrimaryKey(t => t.UserId);
             
         }
         
         public override void Down()
         {
-            DropForeignKey("dbo.Teachers", "UserId", "dbo.Users");
             DropForeignKey("dbo.Supervisors", "FacultyId", "dbo.Faculties");
-            DropForeignKey("dbo.Supervisors", "UserId", "dbo.Users");
             DropForeignKey("dbo.Students", "AcademicGroupId", "dbo.AcademicGroups");
-            DropForeignKey("dbo.Students", "UserId", "dbo.Users");
             DropForeignKey("dbo.AcademicGroups", "SpecialtyId", "dbo.Specialties");
             DropForeignKey("dbo.Subjects", "Faculty_FacultyId", "dbo.Faculties");
             DropForeignKey("dbo.Specialties", "Specialty_SpecialtyId", "dbo.Specialties");
@@ -288,11 +291,8 @@ namespace Timetable.DAL.Migrations
             DropForeignKey("dbo.Consults", "ClassroomId", "dbo.Classrooms");
             DropForeignKey("dbo.Classrooms", "BuildingId", "dbo.Buildings");
             DropForeignKey("dbo.Consults", "AcademicGroupId", "dbo.AcademicGroups");
-            DropIndex("dbo.Teachers", new[] { "UserId" });
             DropIndex("dbo.Supervisors", new[] { "FacultyId" });
-            DropIndex("dbo.Supervisors", new[] { "UserId" });
             DropIndex("dbo.Students", new[] { "AcademicGroupId" });
-            DropIndex("dbo.Students", new[] { "UserId" });
             DropIndex("dbo.SpecialtyFaculties", new[] { "Faculty_FacultyId" });
             DropIndex("dbo.SpecialtyFaculties", new[] { "Specialty_SpecialtyId" });
             DropIndex("dbo.TeacherChairs", new[] { "Chair_ChairId" });

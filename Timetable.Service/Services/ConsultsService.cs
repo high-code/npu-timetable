@@ -7,6 +7,7 @@ using Timetable.DAL.Entities;
 using Timetable.DAL.Repositories.Interfaces;
 using Timetable.Service.Interfaces;
 using Timetable.Service.DTO;
+using Timetable.DAL.Specifications;
 using AutoMapper;
 
 namespace Timetable.Service.Services
@@ -46,16 +47,13 @@ namespace Timetable.Service.Services
         }
 
         public IEnumerable<ConsultDTO> Filter(DateTime? date, string facultyTitle, string subjectName,
-            string classroomTitle, string academicGroupName, int page, int pageSize)
+            string classroomTitle, string academicGroupName)
         {
+            ConsultSpecification consultSpecification = new ConsultSpecification(date, facultyTitle,
+                subjectName, classroomTitle, academicGroupName);
+            
 
-            Expression<Func<Consult, bool>> where = c => (date == null || c.Date == date) &&
-                      (facultyTitle == null || c.Faculty.FacultyName.ToLower() == facultyTitle.ToLower()) &&
-                      (subjectName == null || c.Subject.SubjectTitle.ToLower() == subjectName.ToLower()) &&
-                      (classroomTitle == null || c.Classroom.ClassroomTitle.ToLower() == classroomTitle.ToLower()) &&
-                      (academicGroupName == null || c.AcademicGroup.GroupName.ToLower() == academicGroupName.ToLower());
-
-            var consults = consultRepository.GetMany(where, page, pageSize);
+            var consults = consultRepository.GetMany(consultSpecification);
 
 
             return mapper.Map<IEnumerable<Consult>, IEnumerable<ConsultDTO>>(consults);
