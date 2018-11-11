@@ -3,7 +3,6 @@ configuration: staging
 before_build: 
  - nuget restore
  
- 
- build:
-  verbosity: minimal
-  publish_wap: true
+build:
+ verbosity: minimal
+ publish_wap: true
